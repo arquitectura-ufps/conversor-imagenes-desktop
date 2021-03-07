@@ -5,10 +5,14 @@
  */
 package views;
 
+import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,16 +20,39 @@ import java.util.logging.Logger;
  */
 public class App extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Index
-     */
     Handle handle = Handle.getInstance();
+    JLabel extensions[];
+    JLabel select;
 
     public App() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.cmbExt.setEnabled(false);
         this.btnConverter.setEnabled(false);
+        this.panelExt.setVisible(false);
+        extensions = new JLabel[]{this.lblJPG, this.lblPNG, this.lblBMP, this.lblGIF};
+    }
+
+    private void loadLabels(String ext) {
+        for (JLabel extension : extensions) {
+            extension.setVisible(true);
+            if (!extension.getName().equalsIgnoreCase(ext)) {
+                extension.setEnabled(true);
+                extension.setIcon(new ImageIcon("src/main/java/images/" + extension.getName() + ".png"));
+                extension.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        if (select != null) {
+                            select.setBorder(null);
+                        }
+                        select = extension;
+                        select.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+                    }
+                });
+            } else {
+                extension.setVisible(false);
+            }
+        }
+        this.panelExt.setVisible(true);
     }
 
     /**
@@ -45,9 +72,12 @@ public class App extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtDestination = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
         btnConverter = new javax.swing.JButton();
-        cmbExt = new javax.swing.JComboBox<>();
+        panelExt = new javax.swing.JPanel();
+        lblJPG = new javax.swing.JLabel();
+        lblPNG = new javax.swing.JLabel();
+        lblBMP = new javax.swing.JLabel();
+        lblGIF = new javax.swing.JLabel();
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel4.setText("Guardar en:");
@@ -101,10 +131,6 @@ public class App extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Formato:");
-
         btnConverter.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnConverter.setText("Convertir Imágen");
         btnConverter.addActionListener(new java.awt.event.ActionListener() {
@@ -113,7 +139,54 @@ public class App extends javax.swing.JFrame {
             }
         });
 
-        cmbExt.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lblJPG.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblJPG.setEnabled(false);
+        lblJPG.setName("jpg"); // NOI18N
+        lblJPG.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblJPGMouseClicked(evt);
+            }
+        });
+
+        lblPNG.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblPNG.setEnabled(false);
+        lblPNG.setName("png"); // NOI18N
+
+        lblBMP.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblBMP.setEnabled(false);
+        lblBMP.setName("bmp"); // NOI18N
+
+        lblGIF.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblGIF.setEnabled(false);
+        lblGIF.setName("gif"); // NOI18N
+
+        javax.swing.GroupLayout panelExtLayout = new javax.swing.GroupLayout(panelExt);
+        panelExt.setLayout(panelExtLayout);
+        panelExtLayout.setHorizontalGroup(
+            panelExtLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelExtLayout.createSequentialGroup()
+                .addContainerGap(58, Short.MAX_VALUE)
+                .addComponent(lblJPG, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblPNG, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblBMP, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblGIF, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55))
+        );
+        panelExtLayout.setVerticalGroup(
+            panelExtLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelExtLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelExtLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblJPG, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelExtLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblPNG, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblBMP, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblGIF, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -127,19 +200,25 @@ public class App extends javax.swing.JFrame {
                         .addGap(0, 15, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtDestination, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtOriginal, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbExt, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtDestination, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
+                            .addComponent(txtOriginal, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnSelectFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnConverter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18))))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(277, 277, 277)
+                        .addComponent(btnConverter, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(panelExt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,12 +236,11 @@ public class App extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnConverter, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
-                    .addComponent(cmbExt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(panelExt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(35, 35, 35)
+                .addComponent(btnConverter, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45))
         );
 
         pack();
@@ -177,18 +255,15 @@ public class App extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDestinationActionPerformed
 
     private void btnSelectFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectFileActionPerformed
-        this.cmbExt.removeAllItems();
+
         try {
             String path = handle.selectImage();
             if (!path.isEmpty()) {
                 this.txtOriginal.setText("");
                 this.txtOriginal.setText(path);
                 this.txtDestination.setText(handle.getImage().getParent());
-                ArrayList<String> extensions = handle.loadExtensions();
-                extensions.forEach(extension -> {
-                    this.cmbExt.addItem(extension);
-                });
-                this.cmbExt.setEnabled(true);
+                String ext = handle.getExtension();
+                this.loadLabels(ext);
                 this.btnConverter.setEnabled(true);
             }
         } catch (IOException e) {
@@ -205,18 +280,27 @@ public class App extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void btnConverterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConverterActionPerformed
-        try {
-            String destination = this.txtDestination.getText(), formatEnd = this.cmbExt.getSelectedItem().toString();
-            handle.convertPhoto(destination, formatEnd);
-            this.txtDestination.setText("");
-            this.txtOriginal.setText("");
-            this.cmbExt.removeAllItems();
-            this.cmbExt.setEnabled(false);
-            this.btnConverter.setEnabled(false);
-        } catch (IOException ex) {
-            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+
+        if (select != null) {
+            try {
+                String destination = this.txtDestination.getText();
+                handle.convertPhoto(destination, select.getName().toUpperCase());
+                this.txtDestination.setText("");
+                this.txtOriginal.setText("");
+                this.btnConverter.setEnabled(false);
+                select = null;
+                this.panelExt.setVisible(false);
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione una extensión para la conversión");
         }
     }//GEN-LAST:event_btnConverterActionPerformed
+
+    private void lblJPGMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblJPGMouseClicked
+
+    }//GEN-LAST:event_lblJPGMouseClicked
 
     /**
      * @param args the command line arguments
@@ -257,13 +341,16 @@ public class App extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConverter;
     private javax.swing.JButton btnSelectFile;
-    private javax.swing.JComboBox<String> cmbExt;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel lblBMP;
+    private javax.swing.JLabel lblGIF;
+    private javax.swing.JLabel lblJPG;
+    private javax.swing.JLabel lblPNG;
+    private javax.swing.JPanel panelExt;
     private javax.swing.JTextField txtDestination;
     private javax.swing.JTextField txtOriginal;
     // End of variables declaration//GEN-END:variables

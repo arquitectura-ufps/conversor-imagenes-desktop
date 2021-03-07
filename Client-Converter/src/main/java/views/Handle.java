@@ -39,18 +39,7 @@ public class Handle {
         return instance;
     }
 
-    public ArrayList<String> loadExtensions() throws IOException {
-        ArrayList<String> valids = new ArrayList<>();
-        String ext = getExtension();
-        for (ImageFormat extension : extensions) {
-            if (ImageFormat.valueOf(ext.toUpperCase()).compareTo(extension) != 0) {
-                valids.add(extension.toString());
-            }
-        }
-        return valids;
-    }
-
-    public boolean validateImage() throws IOException {
+    private boolean validateImage() throws IOException {
         String ext = getExtension();
         ArrayList<String> valids = new ArrayList<>();
         boolean isValid = Arrays.asList(extensions).contains(ImageFormat.valueOf(ext));
@@ -79,13 +68,14 @@ public class Handle {
             converter.source(image);
             converter.setFolder(destination);
             File imageOut = converter.startProcess();
-            System.out.println(imageOut.getAbsolutePath());
             JOptionPane.showMessageDialog(null, "Imagen convertida");
             cleanApp();
         } catch (ConverterException ex) {
             System.out.println(ex.getMessage());
         }
     }
+    
+    
    
 
     public String selectImage() {

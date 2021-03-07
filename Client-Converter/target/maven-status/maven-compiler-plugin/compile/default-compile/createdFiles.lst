@@ -1,2 +1,15 @@
+commons\Converter.class
+views\App$3.class
 views\App$1.class
+views\App$2.class
+core\converter\IConverter.class
+core\ImageConverter.class
+views\Handle.class
+views\App$6.class
+commons\ConverterException.class
+views\App$5.class
+core\converter\IConverter$1.class
+views\App$4.class
 views\App.class
+commons\ImageFormat.class
+views\InitConfig.class
